@@ -1,72 +1,38 @@
-from fractions import gcd
-from random import randint
-es=[]
-def selecterandom(p,q):
-	phi=(p-1)*(q-1)
-	for i in range(3,phi):
-		if(gcd(i,phi)==1):
-			es.append(i)
-	print es	
-	i=randint(0,len(es)-1)
-	print es[i]
-	return es[i]
-
-
-
-p=input("enter p :")
-q=input("enter q :")
-n=p*q
-phi=(p-1)*(q-1)
-e=selecterandom(p,q)
-#e=input("enter e :")
+p=input("enter p: ")
+q=input("Enter q: ")
+e=input("Enter e: ")
 d=1
 s=0
+n=p*q
+phi=(p-1)*(q-1)
 while(s!=1):
 	s=(d*e)%phi
-	d+=1;
+	d+=1
 d-=1
-print("public key "+str(e)+" "+str(n))
-print("private key "+str(d)+" "+str(n))
-
-data=raw_input("enter the data to be encrypted : ")
-list=[]
-for k in data:
-	list.append(ord(k))
-print list
-
-print("encryption : ")
+print d
+data=raw_input("Enter data: ")
+print "encrypt"
 enc=[]
-for k in list:
+for k in data:
+	l=ord(k)
 	c=1
 	for m in range(0,e):
-		c=c*k
-		c=c%n
-	c=c%n
+		c*=l
+		c%=n
+	c%=n
 	enc.append(c)
-print enc
-#output=''
-#for k in enc:
- #       if output!='':
-  #              output+=chr(k)
-   #     else:
-    #            output=chr(k)
-#print output
-print("decryption : ")
+print enc		
+print "decrypt"
 dec=[]
 for k in enc:
 	c=1
-	for m in range(0,d):
-		c=c*k
-		c=c%n
-	c=c%n
-	dec.append(c)
-print dec
-
-output=''
+	for l in range(0,d):
+		c*=k
+		c%=n
+	c%=n
+	dec.append(chr(c))
+#print dec
+str=' '
 for k in dec:
-	if output!='':
-		output+=chr(k)
-	else:
-		output=chr(k)
-print output
-	
+	str+=k
+print str[1:]
